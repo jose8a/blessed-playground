@@ -1,11 +1,10 @@
 import 'zx/globals';
-//const blessed = require('blessed');
-//const contrib = require('../index');
 import blessed from 'blessed';
 import contrib from 'blessed-contrib';
 
 import { widgets } from './widgetOptions.mjs';
 
+const data = fs.readJsonSync('./dummyData.json');
 class View {
   constructor() {
     this.screen = blessed.screen();
@@ -92,7 +91,7 @@ class View {
     );
   }
 
-  renderScreen() {
+  onResizeSetScreen() {
     // fixes https://github.com/yaronn/blessed-contrib/issues/10
     this.screen.on('resize', () => {
       this.subgrids.donut.emit('attach');
@@ -107,16 +106,22 @@ class View {
       this.subgrids.map.emit('attach');
       this.subgrids.log.emit('attach');
     });
+  }
 
+  renderScreen() {
     this.screen.render()
   }
 
+  getWidget (widget) {
+    return this.subgrids[widget];
+  }
 }
 
 
-const dashboard = new View();
-dashboard.setKeyboardShortcuts();
-dashboard.renderScreen();
+const dash = new View();
+dash.setKeyboardShortcuts();
+dash.onResizeSetScreen();
+dash.renderScreen();
 
 
 // .....
@@ -127,18 +132,28 @@ dashboard.renderScreen();
 // let gauge_percent_two = 0
 // .....
 
-// ----- setInterval(function() {
-// -----   gauge.setData([gauge_percent, 100-gauge_percent]);
-// -----   gauge_percent++;
-// -----   if (gauge_percent>=100) gauge_percent = 0
-// ----- }, 200)
-// -----
-// ----- setInterval(function() {
-// -----   gauge_two.setData(gauge_percent_two);
-// -----   gauge_percent_two++;
-// -----   if (gauge_percent_two>=100) gauge_percent_two = 0
-// ----- }, 200);
-// -----
+const gaugeOne = dash.getWidget("gaugeOne");
+const gaugeTwo = dash.getWidget("gaugeTwo");
+let gaugeOnePct = data.gauges.percentOne;
+let gaugeTwoPct = data.gauges.percentTwo;
+
+setInterval(() => {
+  gaugeOne.setData([gaugeOnePct, 100 - gaugeOnePct]);
+  gaugeOnePct++;
+
+  if (gaugeOnePct >= 100) gaugeOnePct = 0
+  dash.renderScreen();
+}, 200)
+
+setInterval(() => {
+  if (gaugeTwoPct > 99) gaugeTwoPct = 0
+
+  gaugeTwo.setData(gaugeTwoPct);
+  gaugeTwoPct++;
+
+  dash.renderScreen();
+}, 200)
+
 // -----
 // ----- //set dummy data on bar chart
 // ----- function fillBar() {
