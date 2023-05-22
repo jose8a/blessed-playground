@@ -1,4 +1,8 @@
 {
+  "donut": {
+    "donutPct": 0.00
+  },
+
   "servers": [
     "US1", "US2", "EU1",
     "AU1", "AS1", "JP1"
@@ -10,13 +14,16 @@
     "gulp", "tar -xvf", "awk", "npm install"
   ],
 
-  "gauges": {
-    "percentOne": 0,
-    "percentTwo": 0
+  "gaugeOne": {
+    "percent": 0
   },
 
-  "sparks": {
-    "spark1": [
+  "gaugeTwo": {
+    "percent": 0
+  },
+
+  "sparks": [
+    [
       1,2,5,2,1,
       5,1,2,5,2,
       1,5,4,4,5,
@@ -25,7 +32,7 @@
       2,5,2,1,5,
       1,2,5,2,1,5
     ],
-    "spark2": [
+    [
       4,4,5,4,1,
       5,1,2,5,2,
       1,5,4,4,5,
@@ -34,11 +41,24 @@
       2,5,2,1,5,
       1,2,5,2,1,5
     ]
+  ],
+
+  "map": {
+    "showMarkers": true,
+    "markers": [
+      {"lon" : "-79.0000", "lat" : "37.5000", "color": "yellow", "char": "X" },
+      {"lon" : "-122.6819", "lat" : "45.5200" },
+      {"lon" : "-6.2597", "lat" : "53.3478" },
+      {"lon" : "103.8000", "lat" : "1.3000" }
+    ]
   },
 
-  "marker": true,
+  "lcd": {
+    "colors": ["green","magenta","cyan","red","blue"],
+    "text": ["A","B","C","D","E","F","G","H","I","J","K","L"]
+  },
 
-  "transactionsData": [
+  "transactions": [
     {
       "title": "USA",
       "style": {
@@ -85,7 +105,7 @@
     }
   ],
 
-  "errorsData": {
+  "errorsData": [{
     "title": "server 1",
     "x": [
       "00:00", "00:05", "00:10",
@@ -94,17 +114,5 @@
     "y": [
       30, 50, 70, 40, 50, 20
     ]
-  },
-
-  "latencyData": {
-    "x": [
-      "t1", "t2", "t3", "t4"
-    ],
-    "y": [
-      5, 1, 7, 5
-    ]
-  },
-
-  "donutPct": "0.00"
+  }]
 }
-

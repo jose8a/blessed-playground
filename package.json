@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "dash": "export TERM=xterm && node dashboard.mjs",
     "dev": "export TERM=xterm && node index.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
